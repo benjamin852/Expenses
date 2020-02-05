@@ -18,28 +18,39 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Personal Expenses',
-      theme: ThemeData(
-          primarySwatch: Colors.indigo,
-          accentColor: Colors.amber,
-          errorColor: Colors.red,
-          fontFamily: 'Quicksand',
-          textTheme: ThemeData.light().textTheme.copyWith(
-                title: TextStyle(
-                    fontFamily: 'OpenSans',
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
-                button: TextStyle(color: Colors.white),
-              ),
-          appBarTheme: AppBarTheme(
-              textTheme: ThemeData.light().textTheme.copyWith(
-                  title: TextStyle(
-                      fontFamily: 'OpenSans',
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold)))), //override all title text
-      home: MyHomePage(),
-    );
+    return Platform.isIOS
+        ? CupertinoApp(
+            title: 'Personal Expenses',
+            theme: CupertinoThemeData(
+              primaryColor: Colors.indigo,
+              primaryContrastingColor: Colors.amber,
+            ),
+            //override all title text
+            home: MyHomePage(),
+          )
+        : MaterialApp(
+            title: 'Personal Expenses',
+            theme: ThemeData(
+                primarySwatch: Colors.indigo,
+                accentColor: Colors.amber,
+                errorColor: Colors.red,
+                fontFamily: 'Quicksand',
+                textTheme: ThemeData.light().textTheme.copyWith(
+                      title: TextStyle(
+                          fontFamily: 'OpenSans',
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
+                      button: TextStyle(color: Colors.white),
+                    ),
+                appBarTheme: AppBarTheme(
+                    textTheme: ThemeData.light().textTheme.copyWith(
+                        title: TextStyle(
+                            fontFamily: 'OpenSans',
+                            fontSize: 20,
+                            fontWeight:
+                                FontWeight.bold)))), //override all title text
+            home: MyHomePage(),
+          );
   }
 }
 
@@ -113,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           );
     final pageBody = SafeArea(
-      //moves all inside reserved scren area
+      //moves all inside reserved scren area^
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
