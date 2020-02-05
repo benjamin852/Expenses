@@ -89,49 +89,67 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final appBar = AppBar(
-      title: Text('Personal Expenses'),
-      actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.add),
-          onPressed: () => _startAddNewTransaction(context),
-        )
-      ],
-    );
-    final pageBody = SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Container(
-            //padding is the system status bar
-            //grab 60% of height
-            //deduct appBar different from that height & paddi ng
-            height: (MediaQuery.of(context).size.height -
-                    appBar.preferredSize.height -
-                    MediaQuery.of(context).padding.top) *
-                0.3,
-            child: Chart(
-              _recentTransactions,
+    final PreferredSize appBar = Platform.isIOS
+        ? CupertinoNavigationBar(
+            middle: Text('Personal Expenses'),
+            trailing: Row(
+              //restrict row taking max size
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                GestureDetector(
+                  child: Icon(CupertinoIcons.add),
+                  onTap: () => _startAddNewTransaction(context),
+                )
+              ],
             ),
-          ),
-          Container(
-            //grab 60% of height
-            //deduct appBar different from that height & padding
-            height: (MediaQuery.of(context).size.height -
-                    appBar.preferredSize.height -
-                    MediaQuery.of(context).padding.top) *
-                0.7,
-            child: TransactionList(
-              _userTransactions,
-              _deleteTransaction,
+          )
+        : AppBar(
+            title: Text('Personal Expenses'),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () => _startAddNewTransaction(context),
+              )
+            ],
+          );
+    final pageBody = SafeArea(
+      //moves all inside reserved scren area
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Container(
+              //padding is the system status bar
+              //grab 60% of height
+              //deduct appBar different from that height & paddi ng
+              height: (MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context).padding.top) *
+                  0.3,
+              child: Chart(
+                _recentTransactions,
+              ),
             ),
-          ),
-        ],
+            Container(
+              //grab 60% of height
+              //deduct appBar different from that height & padding
+              height: (MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context).padding.top) *
+                  0.7,
+              child: TransactionList(
+                _userTransactions,
+                _deleteTransaction,
+              ),
+            ),
+          ],
+        ),
       ),
     );
     return Platform.isIOS
         ? CupertinoPageScaffold(
             child: pageBody,
+            navigationBar: appBar,
           )
         : Scaffold(
             appBar: appBar,
