@@ -98,8 +98,10 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Container(
+              //padding is the system status bar
               height: (MediaQuery.of(context).size.height -
-                      appBar.preferredSize.height) *
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context).padding.top) *
                   0.4,
               child: Chart(
                 _recentTransactions,
@@ -107,8 +109,9 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Container(
               height: (MediaQuery.of(context).size.height -
-                      appBar.preferredSize.height) *
-                  60,
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context).padding.top) *
+                  0.6,
               child: TransactionList(
                 _userTransactions,
                 _deleteTransaction,
