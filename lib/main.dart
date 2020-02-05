@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Personal Expenses',
       theme: ThemeData(
-          primarySwatch: Colors.purple,
+          primarySwatch: Colors.indigo,
           accentColor: Colors.amber,
           errorColor: Colors.red,
           fontFamily: 'Quicksand',
@@ -99,19 +99,23 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Container(
               //padding is the system status bar
+              //grab 60% of height
+              //deduct appBar different from that height & paddi ng
               height: (MediaQuery.of(context).size.height -
                       appBar.preferredSize.height -
                       MediaQuery.of(context).padding.top) *
-                  0.4,
+                  0.3,
               child: Chart(
                 _recentTransactions,
               ),
             ),
             Container(
+              //grab 60% of height
+              //deduct appBar different from that height & padding
               height: (MediaQuery.of(context).size.height -
                       appBar.preferredSize.height -
                       MediaQuery.of(context).padding.top) *
-                  0.6,
+                  0.7,
               child: TransactionList(
                 _userTransactions,
                 _deleteTransaction,
